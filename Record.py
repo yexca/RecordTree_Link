@@ -2,7 +2,7 @@ import os
 import json
 from datetime import datetime
 
-AUTHOR_NAME=""
+AUTHOR_NAME="め"
 COMPARE_DATE="2025-09-01"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -14,10 +14,22 @@ DOWNLOAD_LINKS = []
 
 # search
 def search_author(recordData):
+    global AUTHOR_NAME
+    authorMatches = {}
+    machedAuthorName = ""
     for authorData in recordData:
         if AUTHOR_NAME in authorData["author"]:
-            return authorData
-    return False
+            machedAuthorName = authorData["author"]
+            authorMatches[machedAuthorName] = authorData
+    if len(authorMatches) > 1:
+        print("当前有多个匹配项，请重新输入完整名称")
+        for key in authorMatches:
+            print(key)
+        raise SystemExit
+    else:
+        AUTHOR_NAME = machedAuthorName
+        return authorMatches[machedAuthorName]
+    
 
 # get download link
 def get_download_link(propertys):
