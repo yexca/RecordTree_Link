@@ -2,8 +2,8 @@ import os
 import json
 from datetime import datetime
 
-AUTHOR_NAME="め"
-COMPARE_DATE="2025-09-01"
+AUTHOR_NAME=""
+COMPARE_DATE=""
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 RECORD_PATH = os.path.join(BASE_DIR, 'Record Tree.json')
@@ -35,6 +35,7 @@ def search_author(recordData):
 def get_download_link(propertys):
     for property in propertys:
         DOWNLOAD_LINKS.append(property["Link"])
+        DOWNLOAD_LINKS.append(property["FormattedSize"])
         print(property["Link"])
     return
 
@@ -62,6 +63,9 @@ with open(RECORD_PATH, "r", encoding="utf-8") as file:
             DOWNLOAD_LINKS.append(AUTHOR_NAME + " 在 " + COMPARE_DATE + " 之后的下载链接")
             OUTPUT_NAME = AUTHOR_NAME + " 在 " + COMPARE_DATE + " 之后的下载链接"
 
+            # add latest download date
+            DOWNLOAD_LINKS.append("最新视频的日期为: " + records[0]["FileNames"].split("]")[1][1:])
+
             compareDate = datetime.strptime(COMPARE_DATE, "%Y-%m-%d").date()
             for record in records:
                 filename = record["FileNames"]
@@ -73,6 +77,10 @@ with open(RECORD_PATH, "r", encoding="utf-8") as file:
             print("输出全部下载链接")
             DOWNLOAD_LINKS.append(AUTHOR_NAME + " 全部的下载链接")
             OUTPUT_NAME = AUTHOR_NAME + " 全部的下载链接"
+
+            # add latest download date
+            DOWNLOAD_LINKS.append("最新视频的日期为: " + records[0]["FileNames"].split("]")[1][1:])
+
 
             for record in records:
                 get_download_link(record["property"])
