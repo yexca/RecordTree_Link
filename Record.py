@@ -64,7 +64,7 @@ with open(RECORD_PATH, "r", encoding="utf-8") as file:
             OUTPUT_NAME = AUTHOR_NAME + " 在 " + COMPARE_DATE + " 之后的下载链接"
 
             # add latest download date
-            DOWNLOAD_LINKS.append("最新视频的日期为: " + records[0]["FileNames"].split("]")[1][1:])
+            DOWNLOAD_LINKS.append("最新视频的日期为: " + records[0]["FileNames"].split("]")[1][1:] + "\n")
 
             compareDate = datetime.strptime(COMPARE_DATE, "%Y-%m-%d").date()
             for record in records:
@@ -72,18 +72,22 @@ with open(RECORD_PATH, "r", encoding="utf-8") as file:
                 fileDateOrigin = filename.split("]")[1][1:]
                 fileDate = datetime.strptime(fileDateOrigin, "%Y-%m-%d").date()
                 if compare_date(compareDate, fileDate):
+                    DOWNLOAD_LINKS.append(record["FileNames"].split("]")[1][1:] + " ------------------")
                     get_download_link(record["property"])
+                    DOWNLOAD_LINKS.append("\n")
         else:
             print("输出全部下载链接")
             DOWNLOAD_LINKS.append(AUTHOR_NAME + " 全部的下载链接")
             OUTPUT_NAME = AUTHOR_NAME + " 全部的下载链接"
 
             # add latest download date
-            DOWNLOAD_LINKS.append("最新视频的日期为: " + records[0]["FileNames"].split("]")[1][1:])
+            DOWNLOAD_LINKS.append("最新视频的日期为: " + records[0]["FileNames"].split("]")[1][1:] + "\n")
 
 
             for record in records:
+                DOWNLOAD_LINKS.append(record["FileNames"].split("]")[1][1:] + " ------------------")
                 get_download_link(record["property"])
+                DOWNLOAD_LINKS.append("\n")
     else:
         print(AUTHOR_NAME + " 不存在")
 
