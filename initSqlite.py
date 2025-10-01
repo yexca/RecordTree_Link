@@ -1,7 +1,9 @@
 import sqlite3
+from util import Util
 
 def main():
-    conn = sqlite3.connect("recordTree.db")
+    util = Util()
+    conn = sqlite3.connect(util.get_database_path())
     cursor = conn.cursor()
 
     # author_id, name, added_date
