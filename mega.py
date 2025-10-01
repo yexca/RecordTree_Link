@@ -1,6 +1,6 @@
 import subprocess, sys, shlex
 
-class mega:
+class Mega:
     def __init__(self):
         pass
 
@@ -27,10 +27,12 @@ class mega:
             raise RuntimeError(f"command failed: {cmd}")
 
     def is_logged_in(self):
+        # cmd = "mega-whoami"
         result = subprocess.run(
             ["mega-whoami"],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
+            shell=True,
             encoding="utf-8",
             text=True
         )
